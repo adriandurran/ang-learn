@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var Post = require('./models/post');
+var Post = require('./server/models/post');
 var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/social', function() {
@@ -10,17 +10,19 @@ mongoose.connect('mongodb://localhost/social', function() {
 var app = express();
 app.use(bodyParser.json());
 
-app.get('/api/posts', function(req, res) {
-	res.json([
-			{
-				username: 'adrian66',
-				body: 'Node is the best!'
-			},
-			{
-				username: 'bigboy99',
-				body: 'Angular really works for me!!'
-			}
-		]);
+
+app.use(express.static(__dirname + '/client'));
+
+
+app.get('/', function(req, res) {
+	res.sendFile(__dirname + '/client/layout/posts.html');
+});
+
+app.get('/api/posts', function(req, res, next) {
+	Post.find(function(err, posts) {
+		if (err) {return next(err);}
+		res.json(posts);
+	});
 });
 
 app.post('/api/posts', function(req, res) {

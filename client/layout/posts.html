@@ -30,7 +30,7 @@
 		<script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
 		<script>
 			var app = angular.module('app', []);
-			app.controller('PostsCtrl', function($scope) {
+			app.controller('PostsCtrl', function($scope, $http) {
 				$scope.addPost = function() {
 					if ($scope.postBody) {
 						$scope.posts.unshift({
@@ -40,16 +40,10 @@
 						$scope.postBody=null;
 					}
 				}
-				$scope.posts = [
-					{
-						username: 'adrian66',
-						body: 'Node is the best!'
-				},
-				{
-					username: 'bigboy99',
-					body: 'Angular really works for me!!'
-				}
-				];
+				$http.get('/api/posts')
+					.success(function(posts) {
+						$scope.posts = posts;
+					});
 			});
 		</script>
 	</body>
