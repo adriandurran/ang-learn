@@ -1,10 +1,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var Post = require('./server/models/post');
+var Poser = require('./server/models/poser');
 var mongoose = require('mongoose');
 var morgan = require('morgan');
 
-mongoose.connect('mongodb://localhost/test', function(err) {
+mongoose.connect('mongodb://localhost/social', function(err) {
 	if (err) {throw err;}
 	console.log('mongodb connected');
 });
@@ -12,7 +13,7 @@ mongoose.connect('mongodb://localhost/test', function(err) {
 var app = express();
 app.use(bodyParser.json());
 
-// app.use(express.static(__dirname + '/client'));
+app.use(express.static(__dirname + '/client'));
 app.use(morgan('dev'));
 
 app.get('/', function(req, res) {
@@ -20,6 +21,16 @@ app.get('/', function(req, res) {
 });
 
 app.get('/users', function(req, res) {
+	Poser.find(function(err, posts) {
+		if (err) {
+			console.log(err);
+			return next(err);
+		}
+		res.json(posts);
+	});
+});
+
+app.get('/api/posts', function(req, res, next) {
 	Post.find(function(err, posts) {
 		if (err) {
 			console.log(err);
@@ -27,20 +38,6 @@ app.get('/users', function(req, res) {
 		}
 		res.json(posts);
 	});
-});
-
-app.get('/api/posts', function(req, res, next) {
-	res.json([
-		{username: "thebastard", body:"You fucking abstard"}
-		]);
-
-	// Post.find(function(err, posts) {
-	// 	if (err) {
-	// 		console.log(err);
-	// 		// return next(err);
-	// 	}
-	// 	res.json(posts);
-	// });
 });
 
 app.post('/api/posts', function(req, res) {
