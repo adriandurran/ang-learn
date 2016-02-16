@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/client'));
 
 
 app.get('/', function(req, res) {
-	res.sendFile(__dirname + '/client/layout/posts.html');
+	res.sendFile('client/layout/posts.html',  { root : __dirname});
 });
 
 app.get('/api/posts', function(req, res, next) {
