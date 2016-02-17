@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<title>Learning MEAN</title>
+		<link rel="stylesheet" href="../css/bootstrap.css">
+		<link rel="stylesheet" href="../css/main.css">
 	</head>
 	<body ng-app='app'>
 		<div class="container" div ng-controller='PostsCtrl'>
@@ -27,26 +28,7 @@
 			</ul>
 		</div>
 
-		<script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-		<script>
-			var app = angular.module('app', []);
-			app.controller('PostsCtrl', function($scope, $http) {
-				$scope.addPost = function() {
-					if ($scope.postBody) {
-						$http.post('api/posts', {
-							username: 'FatBoyz', body: $scope.postBody
-						}).success(function(post) {
-							$scope.posts.unshift(post);
-							$scope.postBody = null;
-						})
-
-					}
-				}
-				$http.get('/api/posts')
-					.success(function(posts) {
-						$scope.posts = posts;
-					});
-			});
-		</script>
+		<script src= "../js/vendor.js"></script>
+		<script src="../js/app.js"></script>
 	</body>
 </html>
