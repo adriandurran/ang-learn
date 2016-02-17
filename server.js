@@ -14,10 +14,13 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/client'));
 app.use(morgan('dev'));
 
+app.use(require('./server/auth'));
 app.use(require('./server/controllers/api/posts'));
+app.use(require('./server/controllers/api/sessions'));
+app.use(require('./server/controllers/api/users'));
 
 app.get('/', function(req, res) {
-	res.sendFile('./client/layout/posts.html',  { root : __dirname});
+	res.sendFile('./client/layout/app.html',  { root : __dirname});
 });
 
 

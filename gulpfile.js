@@ -104,6 +104,7 @@ gulp.task('vendor', function() {
   return gulp.src([
     'node_modules/jquery/dist/jquery.js',
     'node_modules/angular/angular.js',
+    'node_modules/angular-route/angular-route.js',
     'node_modules/bootstrap/dist/js/bootstrap.js'
     ]).pipe(concat('vendor.js'))
     .pipe(uglify({ mangle: false}))

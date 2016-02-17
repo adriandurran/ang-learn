@@ -1,0 +1,21 @@
+<div class="container">
+	<h1>Recent Posts</h1>
+	<hr>
+	<form role="form">
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" class="form-control" ng-model="postBody"/>
+				<span class="input-group-btn">
+					<button class="btn btn-primary" ng-click='addPost()'>Add Post</button>
+				</span>
+			</div>
+		</div>
+	</form>
+	<hr>
+	<ul class="list-group">
+		<li class="list-group-item" ng-repeat="post in posts|orderBy:'-date'">
+			<strong>@{{ post.username }}</strong>
+			<span>{{ post.body }}</span>
+		</li>
+	</ul>
+</div>

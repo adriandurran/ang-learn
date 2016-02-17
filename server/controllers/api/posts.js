@@ -8,7 +8,7 @@ router.get('/api/posts', function(req, res, next) {
 		.exec(function(err, posts) {
 		if (err) {
 			console.log(err);
-			// return next(err);
+			return next(err);
 		}
 		res.json(posts);
 	});
@@ -16,9 +16,9 @@ router.get('/api/posts', function(req, res, next) {
 
 router.post('/api/posts', function(req, res, next) {
 	var post = new Post({
-		username: req.body.username,
 		body: req.body.body
 	});
+	post.username = req.auth.username;
 	post.save(function(err, post) {
 		if (err) {return next(err);}
 		res.status(201).json(post);
